@@ -1,0 +1,175 @@
+{
+  "name": "total-households-by-town",
+  "datapackage_version": "1.0-beta.18",
+  "title": "Total Households by Town",
+  "description": "Total Households by Town reports a total count of households for a given Town and year.",
+  "version": "1.0",
+  "licenses": [{
+    "url": "http://opendatacommons.org/licenses/pddl/",
+    "name": "Open Data Commons Public Domain",
+    "version": "1.0",
+    "id": "odc-pddl"
+  }],
+  "sources": [{
+    "name": "uscensus",
+    "web": ""
+  }],
+  "author":[{
+    "name": "Jenna Daly",
+    "email": "jdaly@ctdata.org",
+    "web": "http://ctdata.org"
+  }],
+  "contributor": [],
+  "resources": [{
+    "path": "data/total-households-town-2016.csv",
+    "format": "csv",
+    "schema": {
+      "fields": [{
+          "name": "Town",
+          "type": "string",
+          "dimension": false
+        }, {
+          "name": "FIPS",
+          "type": "string",
+          "dimension": false
+        }, {
+          "name": "Year",
+          "type": "string",
+          "dimension": false
+        }, {
+          "name": "Measure Type",
+          "type": "string",
+          "dimension": true,
+          "constraints": {
+            "enum": ["Number"]
+         }
+        }, {
+          "name": "Variable",
+          "type": "string",
+          "dimension": true,
+          "constraints": {
+            "enum": ["Total Households", "Margins of Error"]
+         }
+        }, {
+          "name": "Value",
+          "type": "number",
+          "dimension": false
+        }]
+      }
+    }
+  ],
+  "last_modified": "12/13/2017",
+  "ckan_extras": {
+    "full_description": {
+      "ckan_name": "Full Description",
+      "value": "The American Community Survey defines a household as including all the people who occupy a housing unit. A household may be anywhere from one person living alone, a single family, two or more families living together, or any other group of related or unlrelated people who share a housing unit. This data originates from the American Community Survey 5-Year estimates, table B10063.",
+      "type": "string"
+    },
+    "suppression": {
+      "ckan_name": "Suppression",
+      "value": "",
+      "type": "string"
+    },
+    "technical_notes": {
+      "ckan_name": "Technical Notes",
+      "value": "",
+      "type": "string"
+    },
+    "socrata": {
+      "ckan_name": "Socrata",
+      "value": "False",
+      "type": "string"
+    },
+    "socrata_url": {
+      "ckan_name": "Socrata Dataset URL",
+      "value": "",
+      "type": "string"
+    },
+    "socrata_dataset_name": {
+      "ckan_name": "Socrata Dataset Name",
+      "value": "",
+      "type": "string"
+    }, 
+    "domain": {
+      "ckan_name": "Domain",
+      "value": "Housing",
+      "type": "string"
+    },
+    "subdomain": {
+      "ckan_name": "Subdomain",
+      "value": "Household Characteristics",
+      "type": "string"
+    },
+    "geography": {
+      "ckan_name": "Geography",
+      "value": "Town",
+      "type": "string",
+      "constraints": {"enum": ["Town", "County", "Town/County", "District", "Other"]}
+    },
+    "frequency": {
+      "ckan_name": "Frequency",
+      "value": "Annual",
+      "type": "string"
+    },
+    "years_in_catalog": {
+      "ckan_name": "Years in Catalog",
+      "value": ["2006-2010", "2007-2011", "2008-2012", "2009-2013", "2010-2014", "2011-2015", "2012-2016"],
+      "type": "array"
+    },
+    "latest_year": {
+      "ckan_name": "Latest Year Available",
+      "value": "2012-2016",
+      "type": "string"
+    },
+    "disabled_views": {
+      "ckan_name": "Disabled Views",
+      "value": [],
+      "type": "array",
+      "constraints": {"enum": ["map", "table", "bar", "line"]}
+    },
+    "units": {
+      "ckan_name": "Units",
+      "value": {
+        "Number": "",
+        "Percent": "%"
+      }
+    },
+    "expected_number_of_geographies": {
+      "ckan_name": "Expected Number of Unique Geographies",
+      "value": 170,
+      "type": "string"
+    },     
+    "default": {      
+      "ckan_name": "Default",
+      "value": {
+        "Town": "Connecticut",
+        "Year": ["2012-2016"],
+        "Measure Type": "Number", 
+        "Variable": "Total Households"
+      },
+      "type": "object"
+    } 
+  },
+  "spot_checks": [
+    {
+      "type": "$lookup",
+      "filter": {
+        "Town": "Brooklyn",
+        "Year":	"2011-2015",
+        "Variable":	"Margins of Error",
+        "Measure Type":	"Number"
+      },
+      "expected": {
+        "type": "$match",
+        "number type": "int",
+        "value": 200
+      } 
+    }      
+  ],
+  "dimension_groups": [
+    {       
+      "Measure Type": ["Number"], 
+      "Variable": ["Total Households", "Margins of Error"]     
+     }
+  ]
+}
